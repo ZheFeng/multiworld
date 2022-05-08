@@ -1,0 +1,30 @@
+{
+  "name": "multiworld",
+  "version": "0.0.1",
+  "description": "multiworld",
+  "main": "main.ts",
+  "scripts": {
+    "start": "ts-node main.ts",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZheFeng/multiworld.git"
+  },
+  "keywords": [
+    "multi",
+    "world",
+    "world",
+    "game"
+  ],
+  "author": "Zhe Feng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZheFeng/multiworld/issues"
+  },
+  "homepage": "https://github.com/ZheFeng/multiworld#readme",
+  "devDependencies": {
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  }
+}
