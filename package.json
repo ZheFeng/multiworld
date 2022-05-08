@@ -2,9 +2,9 @@
   "name": "multiworld",
   "version": "0.0.1",
   "description": "multiworld",
-  "main": "main.ts",
+  "main": "index.ts",
   "scripts": {
-    "start": "ts-node main.ts",
+    "start": "ts-node index.ts",
     "test": "test"
   },
   "repository": {

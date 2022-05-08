@@ -31,10 +31,10 @@ enum WORLD_ATOM_GENERATE_DIFFICULTY {
 
 
 export enum DIRECTION {
-    up = 'j',
-    down = 'k',
-    left = 'h',
-    right = 'l',
+    up,
+    down,
+    left,
+    right,
 }
 
 
@@ -58,44 +58,68 @@ export class World {
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
                 const random = Math.floor(Math.random() * this.atomGenerateRate);
-                if (random === 0) {
-                    this.atoms.push(new WorldItem(new Atom(), new Coordinate(x, y)));
+                if (random === 0 && x != 0 && y != 0) {
+                    const coordinate = new Coordinate(x, y);
+                    this.createAtom(coordinate);
                 }
             }   
         }
     }
 
-    movePlayer(direction: DIRECTION) {
-        this.moveItem(direction, this.player)
+    createAtom(coordinate: Coordinate) {
+        const atom = new WorldItem(new Atom(), coordinate);
+        this.atoms.push(atom);
     }
 
-    moveItem<T>(direction: DIRECTION, item: WorldItem<T>) {
-        const coordinate = Coordinate.clone(item.coordinate);
+    findAtomIndex(coordinate: Coordinate): number {
+        return this.atoms.findIndex(atom => {
+            return atom.coordinate.x === coordinate.x && atom.coordinate.y === coordinate.y;
+        });
+    }
+
+
+    movePlayer(direction: DIRECTION) {
+        const coordinate = World.moveCoordinate(direction, this.player.coordinate);
+        if (this.isInWorld(coordinate)) {
+            this.player.coordinate = coordinate;
+            const index = this.findAtomIndex(coordinate);
+            if (index > -1) {
+                const [atom] = this.atoms.splice(index, 1);
+                this.player.item.collect(atom);
+            }
+            
+        }
+    }
+
+    isInWorld(coordinate: Coordinate): boolean {
+        return coordinate.x >= 0 && coordinate.x <= this.width &&
+        coordinate.y >= 0 && coordinate.y <= this.height
+    }
+
+    static moveCoordinate(direction: DIRECTION, coordinate: Coordinate): Coordinate {
+        let x = coordinate.x;
+        let y = coordinate.y;
         switch (direction) {
             case DIRECTION.up:
-                coordinate.y--;
+                y--;
                 break;
         
             case DIRECTION.down:
-                coordinate.y++;
+                y++;
                 break;
         
             case DIRECTION.left:
-                coordinate.x--;
+                x--;
                 break;
         
             case DIRECTION.right:
-                coordinate.x++
+                x++
                 break;
         
             default:
                 break;
         }
-
-        if (coordinate.x >= 0 && coordinate.x <= this.width &&
-            coordinate.y >= 0 && coordinate.y <= this.height) {
-                item.coordinate = coordinate;
-            }
+        return new Coordinate(x, y);
     }
 }
 
@@ -108,7 +132,7 @@ export class Coordinate {
         this.y = y;
     }
 
-    static clone(coordinate: Coordinate) {
-        return new Coordinate(coordinate.x, coordinate.y);
+    clone() {
+        return new Coordinate(this.x, this.y);
     }
 }
