@@ -29,6 +29,15 @@ enum WORLD_ATOM_GENERATE_DIFFICULTY {
     more = 2
 }
 
+
+export enum DIRECTION {
+    up = 'j',
+    down = 'k',
+    left = 'h',
+    right = 'l',
+}
+
+
 export class World {
     player: WorldItem<Player>;
     atoms: WorldItem<Atom>[];
@@ -55,6 +64,39 @@ export class World {
             }   
         }
     }
+
+    movePlayer(direction: DIRECTION) {
+        this.moveItem(direction, this.player)
+    }
+
+    moveItem<T>(direction: DIRECTION, item: WorldItem<T>) {
+        const coordinate = Coordinate.clone(item.coordinate);
+        switch (direction) {
+            case DIRECTION.up:
+                coordinate.y--;
+                break;
+        
+            case DIRECTION.down:
+                coordinate.y++;
+                break;
+        
+            case DIRECTION.left:
+                coordinate.x--;
+                break;
+        
+            case DIRECTION.right:
+                coordinate.x++
+                break;
+        
+            default:
+                break;
+        }
+
+        if (coordinate.x >= 0 && coordinate.x <= this.width &&
+            coordinate.y >= 0 && coordinate.y <= this.height) {
+                item.coordinate = coordinate;
+            }
+    }
 }
 
 export class Coordinate {
@@ -64,5 +106,9 @@ export class Coordinate {
     constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
+    }
+
+    static clone(coordinate: Coordinate) {
+        return new Coordinate(coordinate.x, coordinate.y);
     }
 }
