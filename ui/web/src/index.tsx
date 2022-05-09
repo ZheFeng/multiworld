@@ -11,28 +11,38 @@ const { Header, Footer, Sider, Content } = Layout;
 function Profile() {
   return (
     <Fragment>
-      <Header>Profile Header</Header>
-      <Content>Profile</Content>
+      <Header style={{ 'background': '#fff', padding: 0 }} />
+      <Content style={{ margin: '0 16px' }}>
+        <div style={{ 'background': '#fff', padding: 24, minHeight: 360 }}>
+        Multi World: Profile
+        </div>
+      </Content>
+      <Footer style={{ textAlign: 'center' }}>Multi World ©2022 Created by Zhe Feng</Footer>
     </Fragment>
   );
 }
 function Home() {
   return (
     <Fragment>
-      <Header>Home Header</Header>
-      <Content>Home</Content>
+      <Header style={{ 'background': '#fff', padding: 0 }} />
+      <Content style={{ margin: '0 16px' }}>
+        <div style={{ 'background': '#fff', padding: 24, minHeight: 360 }}>
+        Multi World: Home
+        </div>
+      </Content>
+      <Footer style={{ textAlign: 'center' }}>Multi World ©2022 Created by Zhe Feng</Footer>
     </Fragment>
   );
 }
 
 type MenuItem = Required<MenuProps>['items'][number];
 function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: 'group',
-): MenuItem {
+    label: React.ReactNode,
+    key: React.Key,
+    icon?: React.ReactNode,
+    children?: MenuItem[],
+    type?: 'group',
+  ): MenuItem {
   return {
     key,
     icon,
@@ -49,22 +59,24 @@ const items: MenuProps['items'] = [
 class App extends Component {
   render() {
     return (
-      <Layout>
-        <Sider>
+      <Layout style={{ minHeight: '100vh' }}>
+        <Sider theme='light'>
           <Menu
-            style={{ width: 256 }}
+            style={{height: '100%'}}
             defaultSelectedKeys={['home']}
             mode="inline"
             items={items}
           />
         </Sider>
-        <Layout>
+        <Layout style={{'background': '#fff'}}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="profile" element={<Profile />} />
           </Routes>
         </Layout>
       </Layout>
+
+
     );
   }
 }
