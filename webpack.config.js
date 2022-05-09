@@ -26,7 +26,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Multi World',
-      template: path.resolve(__dirname, 'ui/web/templates/index.ejs'),
+      template: path.resolve(__dirname, 'ui/web/template.ejs'),
       inject: false,
       scriptLoading: 'blocking',
       appRootId,

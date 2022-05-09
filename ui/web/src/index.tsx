@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Button } from 'antd';
 
+import './index.css';
 
 class Square extends React.Component {
   render() {
     return (
-      <button className="square">
-        {/* TODO */}
-      </button>
+      <Button type="primary">Button</Button>
     );
   }
 }
