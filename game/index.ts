@@ -41,7 +41,7 @@ export enum DIRECTION {
 export class World {
     player: WorldItem<Player>;
     atoms: WorldItem<Atom>[];
-    atomGenerateRate: WORLD_ATOM_GENERATE_DIFFICULTY; // 2-9
+    atomGenerateRate: WORLD_ATOM_GENERATE_DIFFICULTY;
     width: number;
     height: number;
     
