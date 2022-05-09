@@ -59,6 +59,13 @@ if (mode === ENV_MAP.development) {
   config.devtool = 'inline-source-map';
   config.devServer = {
     static: './dist',
+    client: {
+      progress: true,
+      overlay: true,
+      reconnect: true,
+    },
+    compress: true,
+    historyApiFallback: true,
   };
   config.optimization = {
     runtimeChunk: 'single',

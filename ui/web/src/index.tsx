@@ -1,60 +1,70 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { Button } from 'antd';
+import React, { Component, Fragment } from 'react';
+import { createRoot } from 'react-dom/client';
+import { Button, Layout, Menu } from 'antd';
+import type { MenuProps } from 'antd';
+import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 
 import './index.css';
 
-class Square extends React.Component {
-  render() {
-    return (
-      <Button type="primary">Button</Button>
-    );
-  }
+const { Header, Footer, Sider, Content } = Layout;
+
+function Profile() {
+  return (
+    <Fragment>
+      <Header>Profile Header</Header>
+      <Content>Profile</Content>
+    </Fragment>
+  );
+}
+function Home() {
+  return (
+    <Fragment>
+      <Header>Home Header</Header>
+      <Content>Home</Content>
+    </Fragment>
+  );
 }
 
-class Board extends React.Component {
-  renderSquare(i) {
-    return <Square />;
-  }
-
-  render() {
-    const status = 'Next player: X';
-
-    return (
-      <div>
-        <div className="status">{status}</div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
-  }
+type MenuItem = Required<MenuProps>['items'][number];
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: 'group',
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem;
 }
+const items: MenuProps['items'] = [
+  getItem(<Link to="/">Home</Link>, 'home'),
+  getItem(<Link to="/profile">Profile</Link>, 'profile'),
+];
 
-class Game extends React.Component {
+class App extends Component {
   render() {
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board />
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
-        </div>
-      </div>
+      <Layout>
+        <Sider>
+          <Menu
+            style={{ width: 256 }}
+            defaultSelectedKeys={['home']}
+            mode="inline"
+            items={items}
+          />
+        </Sider>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="profile" element={<Profile />} />
+          </Routes>
+        </Layout>
+      </Layout>
     );
   }
 }
@@ -63,8 +73,12 @@ class Game extends React.Component {
 
 function start(rootId: string) {
   const rootDom = document.getElementById(rootId);
-  const root = ReactDOM.createRoot(rootDom);
-  root.render(<Game />);
+  const root = createRoot(rootDom);
+  root.render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
 }
 
 (window as any).start = start;

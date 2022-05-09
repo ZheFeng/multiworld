@@ -4,7 +4,7 @@
   "description": "multiworld",
   "scripts": {
     "start": "ts-node index.ts",
-    "web-dev": "webpack serve --open --config webpack.config.js",
+    "web-start": "webpack serve --open --config webpack.config.js",
     "web-build": "webpack --config webpack.config.js",
     "test": "test"
   },
@@ -47,6 +47,7 @@
     "antd": "^4.20.3",
     "inquirer": "^8.2.4",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0"
   }
 }
