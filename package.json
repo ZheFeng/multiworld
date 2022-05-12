@@ -42,12 +42,16 @@
     "webpack-dev-server": "^4.9.0"
   },
   "dependencies": {
+    "@types/crypto-js": "^4.1.1",
     "@types/inquirer": "^8.2.1",
+    "@types/parse": "^2.18.14",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
     "antd": "^4.20.3",
+    "crypto-js": "^4.1.1",
     "express": "^4.18.1",
     "inquirer": "^8.2.4",
+    "parse": "^3.4.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0"
