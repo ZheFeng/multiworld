@@ -1,40 +1,38 @@
 import React, { FC } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Parse from "parse";
+import { useSelector } from "react-redux";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
+import { RootState } from "./store";
 
-function RequireUnAuth({ children }: { children?: JSX.Element }) {
-    const currentUser = Parse.User.current();
+type AuthWrapperProps = { children?: JSX.Element, needAuth: boolean };
+
+
+const AuthWrapper: FC<AuthWrapperProps> = ({ children, needAuth}) => {
+    const authed = useSelector((state: RootState) => state.user.authed)
+    const location = useLocation();
   
-    if (currentUser) {
-      const location = useLocation();
-      return <Navigate to="/" state={{ from: location }} replace />;
+    if (!needAuth && authed) {
+      return <Navigate to="/" replace />;
     }
-  
-    return children;
-  }
 
-function RequireAuth({ children }: { children?: JSX.Element }) {
-    const currentUser = Parse.User.current();
-
-    if (!currentUser) {
-      const location = useLocation();
+    if (needAuth && !authed) {
       return <Navigate to="/login" state={{ from: location }} replace />;
     }
   
     return children;
-  }
+}
 
 const AppRoutes: FC = () => (
     <Routes>
-      <Route path="/*" element={<RequireAuth><Home /></RequireAuth>} />
-      <Route path="/profile/*" element={<RequireAuth><Profile /></RequireAuth>} />
-      <Route path="login" element={<RequireUnAuth><Login /></RequireUnAuth>} />
-      <Route path="signup" element={<RequireUnAuth><SignUp /></RequireUnAuth>} />
+      <Route path="/*" element={<AuthWrapper needAuth={true}><Home /></AuthWrapper>} />
+      <Route path="/profile/*" element={<AuthWrapper needAuth={true}><Profile /></AuthWrapper>} />
+      <Route path="login" element={<AuthWrapper needAuth={false}><Login /></AuthWrapper>} />
+      <Route path="signup" element={<AuthWrapper needAuth={false}><SignUp /></AuthWrapper>} />
     </Routes>
   )
 

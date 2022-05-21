@@ -4,6 +4,8 @@ import Parse from "parse";
 
 import PublicLayout from "../layouts/PublicLayout";
 import LoginForm from "../components/LoginForm";
+import { useDispatch } from 'react-redux';
+import { login } from '../store/slices/userSlice';
 
 type LoginProps = {
     email: string;
@@ -23,11 +25,13 @@ const submitLogin = async ({ email, password }: LoginProps) => {
 
 const Login: FC = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     return (
         <PublicLayout>
             <Fragment>
                 <LoginForm onFinish={async (loginProps) => {
                     await submitLogin(loginProps);
+                    dispatch(login())
                     navigate("/");
                 }}/>
                 <Link to="/signup">Don't have an account? SignUp</Link>
