@@ -1,5 +1,6 @@
 import React, { FC, Fragment } from 'react';
 import { Form, Input, Button, Typography } from 'antd';
+import { useTranslation, Trans } from 'react-i18next';
 
 const { Title } = Typography;
 
@@ -7,9 +8,14 @@ type LoginFormProps = {
     onFinish: (values: { email: string, password: string}) => void;
 }
 const Login: FC<LoginFormProps> = ({ onFinish }) => {
+  const { t } = useTranslation();
   return (
     <Fragment>
-        <Title>Login</Title>
+        <Title>
+            <Trans i18nKey="login">
+                Miss trans for login title
+            </Trans>
+        </Title>
         <Form onFinish={onFinish}>
             <Form.Item
                 label="Email"
@@ -30,7 +36,7 @@ const Login: FC<LoginFormProps> = ({ onFinish }) => {
 
             <Form.Item>
                 <Button type="primary" htmlType="submit">
-                Submit
+                {t('loginSubmit', 'Miss trans for submit')}
                 </Button>
             </Form.Item>
         </Form>
