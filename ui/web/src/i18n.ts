@@ -12,12 +12,25 @@ const translationZh = {
   'loginSubmit': '确认登录',
 };
 
+
+
+const detectionOptions = {
+  // order and from where user language should be detected
+  order: ['querystring', 'localStorage', 'cookie'],
+
+  // cache user language on
+  caches: ['localStorage', 'cookie'],
+}
+
+
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     debug: process.env.NODE_ENV === 'development',
     fallbackLng: 'zh',
+    detection: detectionOptions,
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
@@ -27,9 +40,13 @@ i18n
     }
   });
 
-  i18n.changeLanguage('zh', (err, t) => {
+  
+  
+(window as any).changeLanguage = (lang) => {
+  i18n.changeLanguage(lang, (err, t) => {
     if (err) return console.log('something went wrong loading', err);
     t('key'); // -> same as i18next.t
   });
-  
+}
+
 export default i18n;
